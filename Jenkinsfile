@@ -10,8 +10,8 @@ pipeline {
         
         stage('Build') {
             steps {
-                sh 'docker run -d -p 9889:80 --name nginx nginx'
-                sh 'docker cp ${WORKSPACE}/index.html nginx:/usr/share/nginx/html'
+                sh 'docker run -d -p 9889:80 --name nginx-sf-web nginx:latest'
+                sh 'docker cp ${WORKSPACE}/index.html nginx-sf-web:/usr/share/nginx/html'
             }
         }
         
@@ -36,7 +36,7 @@ pipeline {
     post {
         always {
             cleanWs()
-            sh 'docker rm -f nginx'
+            sh 'docker rm -f nginx-sf-web'
         }
         
         success {
